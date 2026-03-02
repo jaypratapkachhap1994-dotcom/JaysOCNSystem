@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>JAYS OCN SYSTEM | Version 1.4</title>
+<title>JAYS OCN SYSTEM | Version 1.5</title>
 
-<meta name="description" content="JAYS OCN SYSTEM Version 1.4 - Structured gaming portal with social integration and backend-ready architecture.">
+<meta name="description" content="JAYS OCN SYSTEM Version 1.5 with Firebase Authentication integration and structured gaming portal.">
 
 <style>
 :root{
@@ -23,7 +23,6 @@ background:var(--dark-bg);
 color:white;
 }
 
-/* HEADER */
 header{
 background:var(--main-color);
 padding:18px;
@@ -36,16 +35,8 @@ flex-wrap:wrap;
 #brand{
 font-size:22px;
 font-weight:bold;
-letter-spacing:2px;
 }
 
-#brand small{
-display:block;
-font-size:12px;
-opacity:0.85;
-}
-
-/* SIDEBAR */
 .sidebar{
 position:fixed;
 left:0;
@@ -54,13 +45,6 @@ width:220px;
 height:100%;
 background:#1f2937;
 padding-top:20px;
-overflow-y:auto;
-}
-
-.sidebar h3{
-text-align:center;
-font-size:14px;
-opacity:0.7;
 }
 
 .sidebar a{
@@ -69,7 +53,6 @@ padding:14px;
 text-decoration:none;
 color:white;
 font-weight:bold;
-transition:0.3s;
 border-bottom:1px solid rgba(255,255,255,0.1);
 }
 
@@ -77,61 +60,27 @@ border-bottom:1px solid rgba(255,255,255,0.1);
 background:var(--main-color);
 }
 
-/* MAIN */
 .main{
 margin-left:240px;
 padding:30px;
 }
 
 .section-title{
-margin-top:35px;
-margin-bottom:18px;
 border-bottom:2px solid var(--main-color);
 display:inline-block;
 padding-bottom:6px;
+margin-top:30px;
 }
 
-/* GAMING CARDS */
-.gaming-zone{
-display:flex;
-gap:20px;
-flex-wrap:wrap;
-}
-
-.game-card{
-flex:1;
-min-width:250px;
-background:var(--card-bg);
-padding:22px;
-border-radius:12px;
-transition:0.3s;
-}
-
-.game-card:hover{
-transform:scale(1.05);
-}
-
-.game-card a{
-display:block;
-margin-top:12px;
-padding:9px;
-background:var(--accent-color);
-color:white;
-text-align:center;
-text-decoration:none;
-border-radius:6px;
-}
-
-/* LOGIN PLACEHOLDER (Future Firebase Ready) */
-.login-panel{
-margin-top:40px;
-padding:20px;
+.login-box{
+margin-top:30px;
 background:#1f2937;
+padding:20px;
 border-radius:10px;
 max-width:400px;
 }
 
-.login-panel input{
+.login-box input{
 width:100%;
 padding:10px;
 margin:8px 0;
@@ -139,7 +88,7 @@ border:none;
 border-radius:5px;
 }
 
-.login-panel button{
+.login-box button{
 width:100%;
 padding:10px;
 background:var(--accent-color);
@@ -149,17 +98,20 @@ border-radius:5px;
 cursor:pointer;
 }
 
-/* FOOTER */
+#userStatus{
+margin-top:10px;
+font-size:14px;
+opacity:0.8;
+}
+
 footer{
 text-align:center;
 padding:25px;
 margin-top:50px;
 opacity:0.7;
 font-size:13px;
-border-top:1px solid rgba(255,255,255,0.1);
 }
 
-/* RESPONSIVE */
 @media(max-width:768px){
 .sidebar{display:none;}
 .main{margin-left:0;}
@@ -171,55 +123,81 @@ border-top:1px solid rgba(255,255,255,0.1);
 
 <header>
 <div id="datetime"></div>
-
-<div id="brand">
-JAYS OCN SYSTEM
-<small>Version 1.4 | Structured Upgrade</small>
-</div>
-
-<div>OCN Portal</div>
+<div id="brand">JAYS OCN SYSTEM</div>
+<div id="userStatus">Not Logged In</div>
 </header>
 
 <div class="sidebar">
-<h3>Social Hub</h3>
-<a href="https://youtube.com/@jpsunny0004" target="_blank" rel="noopener noreferrer">YouTube</a>
-<a href="https://t.me/OCNsystem" target="_blank" rel="noopener noreferrer">Telegram</a>
-<a href="https://www.facebook.com/share/18NJr81HGb/" target="_blank" rel="noopener noreferrer">Facebook</a>
-<a href="https://www.bandlab.com/crackyt0004" target="_blank" rel="noopener noreferrer">BandLab</a>
-<a href="https://wazirx.com/invite/3s8fagyj" target="_blank" rel="noopener noreferrer">WazirX</a>
+<a href="https://youtube.com/@jpsunny0004" target="_blank">YouTube</a>
+<a href="https://t.me/OCNsystem" target="_blank">Telegram</a>
+<a href="https://www.facebook.com/share/18NJr81HGb/" target="_blank">Facebook</a>
+<a href="https://wazirx.com/invite/3s8fagyj" target="_blank">WazirX</a>
 </div>
 
 <div class="main">
 
 <h2 class="section-title">Gaming Zone</h2>
 
-<div class="gaming-zone">
-<div class="game-card">
-<h3>Free Fire</h3>
-<p>Battle Royale Action</p>
-<a href="https://ffshare.garena.com/?region=IND&lang=en" target="_blank">Official Link</a>
-</div>
+<p>Firebase Connected Version Ready</p>
 
-<div class="game-card">
-<h3>Candy Crush Saga</h3>
-<p>Puzzle Challenge</p>
-<a href="https://ccs.play.king.com/xYwB/fi" target="_blank">Play Now</a>
-</div>
-</div>
-
-<h2 class="section-title">Future Login System</h2>
-
-<div class="login-panel">
-<input type="text" placeholder="Email">
-<input type="password" placeholder="Password">
-<button>Login (Firebase Ready)</button>
+<div class="login-box">
+<h3>Login System</h3>
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+<button onclick="loginUser()">Login</button>
+<button onclick="logoutUser()">Logout</button>
 </div>
 
 <footer>
-© 2026 JAYS OCN SYSTEM | Version 1.4 Architecture Build
+© 2026 JAYS OCN SYSTEM | Version 1.5 Firebase Build
 </footer>
 
 </div>
+
+<!-- Firebase -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.loginUser = function(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  signInWithEmailAndPassword(auth, email, password)
+  .then(()=>{
+    alert("Login Successful");
+  })
+  .catch((error)=>{
+    alert(error.message);
+  });
+}
+
+window.logoutUser = function(){
+  signOut(auth);
+}
+
+onAuthStateChanged(auth, (user)=>{
+  const status = document.getElementById("userStatus");
+
+  if(user){
+    status.innerText = "Logged In: " + user.email;
+  }else{
+    status.innerText = "Not Logged In";
+  }
+});
+
+</script>
 
 <script>
 function updateTime(){
