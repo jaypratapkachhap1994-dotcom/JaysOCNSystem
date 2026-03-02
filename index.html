@@ -4,112 +4,57 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>JAYS OCN SYSTEM | Version 1.6</title>
-
-<meta name="description" content="JAYS OCN SYSTEM Version 1.6 with Firebase Authentication and Role-Based Owner Control System.">
+<title>JAYS OCN SYSTEM | Version 1.7</title>
 
 <style>
-:root{
---main-color:#1e40af;
---accent-color:#22c55e;
---dark-bg:#0f172a;
-}
-
 body{
 margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:var(--dark-bg);
+font-family:Arial;
+background:#0f172a;
 color:white;
 }
 
 header{
-background:var(--main-color);
-padding:18px;
+background:#1e40af;
+padding:15px;
 display:flex;
 justify-content:space-between;
-align-items:center;
-flex-wrap:wrap;
-}
-
-#brand{
-font-size:22px;
-font-weight:bold;
-}
-
-.sidebar{
-position:fixed;
-left:0;
-top:75px;
-width:220px;
-height:100%;
-background:#1f2937;
-padding-top:20px;
-}
-
-.sidebar a{
-display:block;
-padding:14px;
-text-decoration:none;
-color:white;
-font-weight:bold;
-border-bottom:1px solid rgba(255,255,255,0.1);
-}
-
-.sidebar a:hover{
-background:var(--main-color);
 }
 
 .main{
-margin-left:240px;
 padding:30px;
 }
 
-.login-box{
+.section{
 margin-top:30px;
-background:#1f2937;
-padding:20px;
-border-radius:10px;
-max-width:400px;
-}
-
-.login-box input{
-width:100%;
-padding:10px;
-margin:8px 0;
-border:none;
-border-radius:5px;
-}
-
-.login-box button{
-width:100%;
-padding:10px;
-background:var(--accent-color);
-border:none;
-color:white;
-border-radius:5px;
-cursor:pointer;
-}
-
-#ownerPanel{
-display:none;
-margin-top:20px;
 padding:20px;
 background:#111827;
 border-radius:10px;
-border:1px solid var(--accent-color);
 }
 
-footer{
-text-align:center;
-padding:25px;
-margin-top:50px;
-opacity:0.7;
-font-size:13px;
+button{
+padding:8px 12px;
+margin-top:8px;
+background:#22c55e;
+border:none;
+color:white;
+cursor:pointer;
+border-radius:5px;
 }
 
-@media(max-width:768px){
-.sidebar{display:none;}
-.main{margin-left:0;}
+input, textarea{
+width:100%;
+padding:8px;
+margin-top:6px;
+border-radius:5px;
+border:none;
+}
+
+.story{
+border-left:4px solid #22c55e;
+padding:10px;
+margin-top:10px;
+background:#1f2937;
 }
 </style>
 </head>
@@ -117,106 +62,99 @@ font-size:13px;
 <body>
 
 <header>
-<div id="datetime"></div>
-<div id="brand">JAYS OCN SYSTEM</div>
-<div id="userStatus">Not Logged In</div>
+<div>JAYS OCN SYSTEM</div>
+<div id="status">Not Logged In</div>
 </header>
-
-<div class="sidebar">
-<a href="https://youtube.com/@jpsunny0004" target="_blank">YouTube</a>
-<a href="https://t.me/OCNsystem" target="_blank">Telegram</a>
-<a href="https://www.facebook.com/share/18NJr81HGb/" target="_blank">Facebook</a>
-</div>
 
 <div class="main">
 
-<h2>Version 1.6 – Role Based System</h2>
-
-<div class="login-box">
-<h3>Login</h3>
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Password">
-<button onclick="loginUser()">Login</button>
-<button onclick="logoutUser()">Logout</button>
+<!-- STORY SUBMISSION -->
+<div class="section">
+<h3>Submit Story</h3>
+<input type="text" id="title" placeholder="Story Title">
+<textarea id="content" placeholder="Write story..."></textarea>
+<button onclick="submitStory()">Submit</button>
 </div>
 
-<div id="ownerPanel">
-<h3>👑 Owner Control Panel</h3>
-<p>Only visible to Owner Role</p>
-<button>Change Theme (Future)</button>
-<button>Add Custom Links (Future)</button>
+<!-- APPROVED STORIES -->
+<div class="section">
+<h3>Published Stories</h3>
+<div id="stories"></div>
 </div>
 
-<footer>
-© 2026 JAYS OCN SYSTEM | Version 1.6 Role System
-</footer>
+<!-- OWNER PANEL -->
+<div class="section" id="ownerPanel" style="display:none;">
+<h3>Owner Control</h3>
+<p>Approve pending stories in Firebase Console (Next upgrade will automate)</p>
+</div>
 
 </div>
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  appId: "YOUR_APP_ID"
+  projectId: "YOUR_PROJECT_ID"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-window.loginUser = function(){
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+window.submitStory = async function(){
 
-  signInWithEmailAndPassword(auth, email, password)
-  .catch(error => alert(error.message));
+  const user = auth.currentUser;
+  if(!user){
+    alert("Login Required");
+    return;
+  }
+
+  await addDoc(collection(db,"stories"),{
+    title: document.getElementById("title").value,
+    content: document.getElementById("content").value,
+    status: "pending",
+    createdAt: new Date()
+  });
+
+  alert("Story Submitted!");
 }
 
-window.logoutUser = function(){
-  signOut(auth);
+async function loadStories(){
+
+  const q = query(collection(db,"stories"), where("status","==","approved"));
+  const snapshot = await getDocs(q);
+
+  const container = document.getElementById("stories");
+  container.innerHTML="";
+
+  snapshot.forEach(doc=>{
+    const data = doc.data();
+    const div = document.createElement("div");
+    div.className="story";
+    div.innerHTML="<h4>"+data.title+"</h4><p>"+data.content+"</p>";
+    container.appendChild(div);
+  });
+
 }
 
-onAuthStateChanged(auth, async (user)=>{
-
-  const status = document.getElementById("userStatus");
+onAuthStateChanged(auth,(user)=>{
+  const status = document.getElementById("status");
   const ownerPanel = document.getElementById("ownerPanel");
 
   if(user){
-    status.innerText = "Logged In: " + user.email;
-
-    // Check Role from Firestore
-    const docRef = doc(db, "users", user.uid);
-    const docSnap = await getDoc(docRef);
-
-    if(docSnap.exists()){
-      if(docSnap.data().role === "owner"){
-        ownerPanel.style.display = "block";
-      }
-    }
-
-  } else {
-    status.innerText = "Not Logged In";
-    ownerPanel.style.display = "none";
+    status.innerText="Logged In";
+  }else{
+    status.innerText="Not Logged In";
   }
-
 });
 
-</script>
+loadStories();
 
-<script>
-function updateTime(){
-const now = new Date();
-document.getElementById("datetime").innerHTML =
-now.toLocaleDateString() + " | " + now.toLocaleTimeString();
-}
-setInterval(updateTime,1000);
-updateTime();
 </script>
 
 </body>
