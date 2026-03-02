@@ -3,111 +3,247 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JAYS-OCN-SYSTEM</title>
+
+<title>JAYS OCN SYSTEM | Gaming • Stories • Digital Power</title>
+
+<meta name="description" content="JAYS OCN SYSTEM is a gaming and creative digital portal featuring Free Fire updates, Candy Crush access, and controlled publishing system.">
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #0a0a0f;
-    color: white;
-    text-align: center;
+
+:root{
+--main-color:#1e40af;
+--accent-color:#22c55e;
+--dark-bg:#0f172a;
+--card-bg:#111827;
 }
 
-header {
-    padding: 60px 20px;
-    background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:var(--dark-bg);
+color:white;
 }
 
-h1 {
-    font-size: 40px;
-    color: #00f7ff;
-    letter-spacing: 3px;
+header{
+background:var(--main-color);
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
 }
 
-.tagline {
-    color: #b3b3ff;
-    font-size: 18px;
-    margin-top: 10px;
+#brand{
+font-size:24px;
+font-weight:bold;
+letter-spacing:2px;
 }
 
-.section {
-    padding: 40px 20px;
+#brand small{
+display:block;
+font-size:12px;
+font-weight:normal;
+opacity:0.8;
 }
 
-.card {
-    background: #141424;
-    margin: 15px auto;
-    padding: 20px;
-    width: 90%;
-    max-width: 400px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px #00f7ff33;
-    transition: 0.3s;
+.sidebar{
+position:fixed;
+left:0;
+top:70px;
+width:200px;
+height:100%;
+background:#1f2937;
+padding-top:20px;
 }
 
-.card:hover {
-    box-shadow: 0 0 25px #00f7ff;
-    transform: scale(1.05);
+.sidebar a{
+display:block;
+padding:12px;
+text-decoration:none;
+color:white;
+font-weight:bold;
+transition:0.3s;
 }
 
-a {
-    text-decoration: none;
-    color: #00f7ff;
-    font-weight: bold;
+.sidebar a:hover{
+background:var(--main-color);
 }
 
-footer {
-    padding: 20px;
-    background: #111;
-    color: #888;
-    font-size: 14px;
+.main{
+margin-left:220px;
+padding:30px;
 }
+
+.section-title{
+margin-bottom:20px;
+border-bottom:2px solid var(--main-color);
+display:inline-block;
+padding-bottom:5px;
+}
+
+.gaming-zone{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.game-card{
+flex:1;
+min-width:250px;
+background:var(--card-bg);
+padding:20px;
+border-radius:10px;
+position:relative;
+transition:0.3s;
+}
+
+.game-card:hover{
+transform:scale(1.03);
+}
+
+.game-card a{
+display:block;
+margin-top:10px;
+padding:8px;
+background:var(--accent-color);
+color:white;
+text-align:center;
+text-decoration:none;
+border-radius:5px;
+}
+
+.status{
+position:absolute;
+top:10px;
+right:10px;
+background:red;
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{box-shadow:0 0 5px red;}
+50%{box-shadow:0 0 20px red;}
+100%{box-shadow:0 0 5px red;}
+}
+
+.login-box{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#1f2937;
+padding:20px;
+width:220px;
+border-radius:10px;
+box-shadow:0px 0px 20px rgba(0,0,0,0.5);
+}
+
+.login-box input{
+width:100%;
+padding:8px;
+margin:5px 0;
+}
+
+.login-box button{
+width:100%;
+padding:8px;
+background:var(--accent-color);
+color:white;
+border:none;
+cursor:pointer;
+}
+
+.owner{
+text-align:center;
+margin-top:10px;
+font-weight:bold;
+font-size:16px;
+color:yellow;
+}
+
+footer{
+text-align:center;
+padding:15px;
+margin-top:40px;
+opacity:0.6;
+font-size:13px;
+}
+
+@media(max-width:768px){
+.sidebar{display:none;}
+.main{margin-left:0;}
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
-    <h1>JAYS-OCN-SYSTEM</h1>
-    <div class="tagline">
-        Digital Music • Creative Tech • Multilingual Culture<br>
-        Operating from Ranchi, Jharkhand, India 🌍
-    </div>
+<div id="datetime"></div>
+
+<div id="brand">
+JAYS OCN SYSTEM
+<small>Gaming • Stories • Digital Power</small>
+</div>
+
+<div>OCN Portal</div>
 </header>
 
-<div class="section">
-    <h2>🌐 My Network</h2>
+<div class="sidebar">
+<a href="https://youtube.com/@jpsunny0004" target="_blank">YouTube</a>
+<a href="https://t.me/OCNsystem" target="_blank">Telegram</a>
+<a href="https://www.bandlab.com/crackyt0004" target="_blank">BandLab</a>
+<a href="https://wazirx.com/invite/3s8fagyj" target="_blank">WazirX</a>
+</div>
 
-    <div class="card">
-        <a href="https://facebook.com/yourpage" target="_blank">🎧 Facebook Music Page</a>
-    </div>
+<div class="main">
 
-    <div class="card">
-        <a href="https://youtube.com/@crackyt" target="_blank">📺 YouTube - Crack YT</a>
-    </div>
+<h2 class="section-title">Gaming Zone</h2>
 
-    <div class="card">
-        <a href="#">💻 My Apps & Coding Projects</a>
-    </div>
+<div class="gaming-zone">
 
-    <div class="card">
-        <a href="https://www.bandlab.com" target="_blank">🎵 BandLab Profile</a>
-    </div>
+<div class="game-card">
+<div class="status">LIVE</div>
+<h3>Free Fire</h3>
+<p>Battle Royale Action</p>
+<a href="https://ffshare.garena.com/?region=IND&lang=en" target="_blank">Official Link</a>
+</div>
 
-    <div class="card">
-        <a href="#">🌍 OCL Beyond Border</a>
-    </div>
-
-    <div class="card">
-        <a href="#">🕊️ Spiritual Peace</a>
-    </div>
+<div class="game-card">
+<div class="status">ONLINE</div>
+<h3>Candy Crush Saga</h3>
+<p>Puzzle Challenge</p>
+<a href="https://ccs.play.king.com/xYwB/fi?deep_link_value=dpid%3D423836031" target="_blank">Play Now</a>
+</div>
 
 </div>
 
 <footer>
-    © 2026 JAYS-OCN-SYSTEM | Built with Passion & Vision
+© 2026 JAYS OCN SYSTEM | Static Version 1.5
 </footer>
+
+</div>
+
+<div class="login-box">
+<h3>LOGIN (Demo)</h3>
+<input type="text" placeholder="Username">
+<input type="password" placeholder="Password">
+<button>Enter</button>
+<div class="owner">Founder: JAYS</div>
+</div>
+
+<script>
+function updateTime(){
+const now = new Date();
+document.getElementById("datetime").innerHTML =
+now.toLocaleDateString() + " | " + now.toLocaleTimeString();
+}
+setInterval(updateTime,1000);
+updateTime();
+</script>
 
 </body>
 </html>
