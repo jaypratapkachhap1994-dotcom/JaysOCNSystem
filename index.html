@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>JAYS OCN SYSTEM | Gaming • Stories • Digital Power</title>
+<title>JAYS OCN SYSTEM | Version 1.4</title>
 
-<meta name="description" content="JAYS OCN SYSTEM is a structured gaming and digital portal connecting YouTube, Telegram, Facebook activities and controlled publishing system.">
+<meta name="description" content="JAYS OCN SYSTEM Version 1.4 - Structured gaming portal with social integration and backend-ready architecture.">
 
 <style>
 :root{
@@ -23,9 +23,10 @@ background:var(--dark-bg);
 color:white;
 }
 
+/* HEADER */
 header{
 background:var(--main-color);
-padding:15px;
+padding:18px;
 display:flex;
 justify-content:space-between;
 align-items:center;
@@ -41,13 +42,14 @@ letter-spacing:2px;
 #brand small{
 display:block;
 font-size:12px;
-opacity:0.8;
+opacity:0.85;
 }
 
+/* SIDEBAR */
 .sidebar{
 position:fixed;
 left:0;
-top:70px;
+top:75px;
 width:220px;
 height:100%;
 background:#1f2937;
@@ -57,7 +59,6 @@ overflow-y:auto;
 
 .sidebar h3{
 text-align:center;
-margin-bottom:10px;
 font-size:14px;
 opacity:0.7;
 }
@@ -76,19 +77,21 @@ border-bottom:1px solid rgba(255,255,255,0.1);
 background:var(--main-color);
 }
 
+/* MAIN */
 .main{
 margin-left:240px;
 padding:30px;
 }
 
 .section-title{
-margin-top:30px;
-margin-bottom:15px;
+margin-top:35px;
+margin-bottom:18px;
 border-bottom:2px solid var(--main-color);
 display:inline-block;
-padding-bottom:5px;
+padding-bottom:6px;
 }
 
+/* GAMING CARDS */
 .gaming-zone{
 display:flex;
 gap:20px;
@@ -99,45 +102,64 @@ flex-wrap:wrap;
 flex:1;
 min-width:250px;
 background:var(--card-bg);
-padding:20px;
-border-radius:10px;
+padding:22px;
+border-radius:12px;
 transition:0.3s;
 }
 
 .game-card:hover{
-transform:scale(1.04);
+transform:scale(1.05);
 }
 
 .game-card a{
 display:block;
-margin-top:10px;
-padding:8px;
+margin-top:12px;
+padding:9px;
 background:var(--accent-color);
 color:white;
 text-align:center;
 text-decoration:none;
+border-radius:6px;
+}
+
+/* LOGIN PLACEHOLDER (Future Firebase Ready) */
+.login-panel{
+margin-top:40px;
+padding:20px;
+background:#1f2937;
+border-radius:10px;
+max-width:400px;
+}
+
+.login-panel input{
+width:100%;
+padding:10px;
+margin:8px 0;
+border:none;
 border-radius:5px;
 }
 
-.fb-links a{
-display:block;
-margin:6px 0;
-color:#60a5fa;
-text-decoration:none;
+.login-panel button{
+width:100%;
+padding:10px;
+background:var(--accent-color);
+border:none;
+color:white;
+border-radius:5px;
+cursor:pointer;
 }
 
-.fb-links a:hover{
-text-decoration:underline;
-}
-
+/* FOOTER */
 footer{
 text-align:center;
-padding:20px;
-margin-top:40px;
-opacity:0.6;
+padding:25px;
+margin-top:50px;
+opacity:0.7;
 font-size:13px;
+border-top:1px solid rgba(255,255,255,0.1);
 }
 
+/* RESPONSIVE */
 @media(max-width:768px){
 .sidebar{display:none;}
 .main{margin-left:0;}
@@ -149,10 +171,12 @@ font-size:13px;
 
 <header>
 <div id="datetime"></div>
+
 <div id="brand">
 JAYS OCN SYSTEM
-<small>Gaming • Stories • Digital Power</small>
+<small>Version 1.4 | Structured Upgrade</small>
 </div>
+
 <div>OCN Portal</div>
 </header>
 
@@ -160,8 +184,7 @@ JAYS OCN SYSTEM
 <h3>Social Hub</h3>
 <a href="https://youtube.com/@jpsunny0004" target="_blank" rel="noopener noreferrer">YouTube</a>
 <a href="https://t.me/OCNsystem" target="_blank" rel="noopener noreferrer">Telegram</a>
-<a href="https://www.facebook.com/share/18NJr81HGb/" target="_blank" rel="noopener noreferrer">Facebook Profile 1</a>
-<a href="https://www.facebook.com/groups/1830248547768278/" target="_blank" rel="noopener noreferrer">Facebook Group</a>
+<a href="https://www.facebook.com/share/18NJr81HGb/" target="_blank" rel="noopener noreferrer">Facebook</a>
 <a href="https://www.bandlab.com/crackyt0004" target="_blank" rel="noopener noreferrer">BandLab</a>
 <a href="https://wazirx.com/invite/3s8fagyj" target="_blank" rel="noopener noreferrer">WazirX</a>
 </div>
@@ -184,19 +207,16 @@ JAYS OCN SYSTEM
 </div>
 </div>
 
-<h2 class="section-title">Facebook Activity</h2>
-<div class="fb-links">
-<a href="https://www.facebook.com/share/1CEfLrpEYx/" target="_blank">Post Link 1</a>
-<a href="https://www.facebook.com/share/1c56HzfLy6/" target="_blank">Post Link 2</a>
-<a href="https://www.facebook.com/share/184GRT4u6s/" target="_blank">Post Link 3</a>
-<a href="https://www.facebook.com/share/1C9TLL8iun/" target="_blank">Post Link 4</a>
-<a href="https://www.facebook.com/share/1Hog24d1di/" target="_blank">Post Link 5</a>
-<a href="https://www.facebook.com/share/18FpMKaMp4/" target="_blank">Post Link 6</a>
-<a href="https://www.facebook.com/share/1FCNajRAmd/" target="_blank">Post Link 7</a>
+<h2 class="section-title">Future Login System</h2>
+
+<div class="login-panel">
+<input type="text" placeholder="Email">
+<input type="password" placeholder="Password">
+<button>Login (Firebase Ready)</button>
 </div>
 
 <footer>
-© 2026 JAYS OCN SYSTEM | Static Version 1.3 Stable Build
+© 2026 JAYS OCN SYSTEM | Version 1.4 Architecture Build
 </footer>
 
 </div>
