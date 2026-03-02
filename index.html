@@ -4,21 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>JAYS OCN SYSTEM | Version 1.7</title>
+<title>JAYS OCN SYSTEM | Version 1.8</title>
 
 <style>
+:root{
+--main-color:#1e40af;
+--accent-color:#22c55e;
+--dark-bg:#0f172a;
+}
+
 body{
 margin:0;
 font-family:Arial;
-background:#0f172a;
+background:var(--dark-bg);
 color:white;
 }
 
 header{
-background:#1e40af;
+background:var(--main-color);
 padding:15px;
 display:flex;
 justify-content:space-between;
+align-items:center;
 }
 
 .main{
@@ -35,27 +42,27 @@ border-radius:10px;
 button{
 padding:8px 12px;
 margin-top:8px;
-background:#22c55e;
+background:var(--accent-color);
 border:none;
 color:white;
 cursor:pointer;
 border-radius:5px;
 }
 
-input, textarea{
-width:100%;
+.slot{
+display:block;
+margin-top:8px;
 padding:8px;
-margin-top:6px;
+background:#1f2937;
 border-radius:5px;
-border:none;
+text-decoration:none;
+color:white;
 }
 
-.story{
-border-left:4px solid #22c55e;
-padding:10px;
-margin-top:10px;
-background:#1f2937;
+#ownerPanel{
+display:none;
 }
+
 </style>
 </head>
 
@@ -68,24 +75,18 @@ background:#1f2937;
 
 <div class="main">
 
-<!-- STORY SUBMISSION -->
 <div class="section">
-<h3>Submit Story</h3>
-<input type="text" id="title" placeholder="Story Title">
-<textarea id="content" placeholder="Write story..."></textarea>
-<button onclick="submitStory()">Submit</button>
+<h3>Dynamic Custom Links</h3>
+<div id="slots"></div>
 </div>
 
-<!-- APPROVED STORIES -->
-<div class="section">
-<h3>Published Stories</h3>
-<div id="stories"></div>
-</div>
-
-<!-- OWNER PANEL -->
-<div class="section" id="ownerPanel" style="display:none;">
-<h3>Owner Control</h3>
-<p>Approve pending stories in Firebase Console (Next upgrade will automate)</p>
+<div class="section" id="ownerPanel">
+<h3>👑 Owner Dashboard</h3>
+<select onchange="changeTheme(this.value)">
+<option value="#1e40af">Blue</option>
+<option value="#22c55e">Green</option>
+<option value="#ffffff">White</option>
+</select>
 </div>
 
 </div>
@@ -94,66 +95,78 @@ background:#1f2937;
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, collection, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID"
+users
+stories
+customLinks
+settings
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-window.submitStory = async function(){
+const ownerPanel = document.getElementById("ownerPanel");
 
-  const user = auth.currentUser;
-  if(!user){
-    alert("Login Required");
-    return;
+onAuthStateChanged(auth, async (user)=>{
+
+  const status = document.getElementById("status");
+
+  if(user){
+    status.innerText="Logged In";
+
+    const userDoc = await getDoc(doc(db,"users",user.uid));
+
+    if(userDoc.exists() && userDoc.data().role==="owner"){
+      ownerPanel.style.display="block";
+    }
+
+  }else{
+    status.innerText="Not Logged In";
+    ownerPanel.style.display="none";
   }
 
-  await addDoc(collection(db,"stories"),{
-    title: document.getElementById("title").value,
-    content: document.getElementById("content").value,
-    status: "pending",
-    createdAt: new Date()
-  });
+});
 
-  alert("Story Submitted!");
-}
+/* REAL-TIME CUSTOM LINKS */
+onSnapshot(collection(db,"customLinks"), (snapshot)=>{
 
-async function loadStories(){
-
-  const q = query(collection(db,"stories"), where("status","==","approved"));
-  const snapshot = await getDocs(q);
-
-  const container = document.getElementById("stories");
+  const container = document.getElementById("slots");
   container.innerHTML="";
 
   snapshot.forEach(doc=>{
     const data = doc.data();
-    const div = document.createElement("div");
-    div.className="story";
-    div.innerHTML="<h4>"+data.title+"</h4><p>"+data.content+"</p>";
-    container.appendChild(div);
+
+    if(data.title && data.url){
+      const link = document.createElement("a");
+      link.href=data.url;
+      link.target="_blank";
+      link.className="slot";
+      link.innerText=data.title;
+      container.appendChild(link);
+    }
+
   });
 
-}
-
-onAuthStateChanged(auth,(user)=>{
-  const status = document.getElementById("status");
-  const ownerPanel = document.getElementById("ownerPanel");
-
-  if(user){
-    status.innerText="Logged In";
-  }else{
-    status.innerText="Not Logged In";
-  }
 });
 
-loadStories();
+/* THEME CHANGE */
+window.changeTheme = async function(color){
+
+  await setDoc(doc(db,"settings","theme"),{
+    mainColor:color
+  });
+
+};
+
+/* REAL-TIME THEME LISTENER */
+onSnapshot(doc(db,"settings","theme"), (docSnap)=>{
+  if(docSnap.exists()){
+    document.documentElement.style.setProperty("--main-color", docSnap.data().mainColor);
+  }
+});
 
 </script>
 
