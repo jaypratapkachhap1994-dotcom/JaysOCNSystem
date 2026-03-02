@@ -6,10 +6,9 @@
 
 <title>JAYS OCN SYSTEM | Gaming • Stories • Digital Power</title>
 
-<meta name="description" content="JAYS OCN SYSTEM is a gaming and creative digital portal featuring Free Fire updates, Candy Crush access, and controlled publishing system.">
+<meta name="description" content="JAYS OCN SYSTEM is a structured gaming and digital portal connecting YouTube, Telegram, Facebook activities and controlled publishing system.">
 
 <style>
-
 :root{
 --main-color:#1e40af;
 --accent-color:#22c55e;
@@ -34,7 +33,7 @@ flex-wrap:wrap;
 }
 
 #brand{
-font-size:24px;
+font-size:22px;
 font-weight:bold;
 letter-spacing:2px;
 }
@@ -42,7 +41,6 @@ letter-spacing:2px;
 #brand small{
 display:block;
 font-size:12px;
-font-weight:normal;
 opacity:0.8;
 }
 
@@ -50,19 +48,28 @@ opacity:0.8;
 position:fixed;
 left:0;
 top:70px;
-width:200px;
+width:220px;
 height:100%;
 background:#1f2937;
 padding-top:20px;
+overflow-y:auto;
+}
+
+.sidebar h3{
+text-align:center;
+margin-bottom:10px;
+font-size:14px;
+opacity:0.7;
 }
 
 .sidebar a{
 display:block;
-padding:12px;
+padding:14px;
 text-decoration:none;
 color:white;
 font-weight:bold;
 transition:0.3s;
+border-bottom:1px solid rgba(255,255,255,0.1);
 }
 
 .sidebar a:hover{
@@ -70,12 +77,13 @@ background:var(--main-color);
 }
 
 .main{
-margin-left:220px;
+margin-left:240px;
 padding:30px;
 }
 
 .section-title{
-margin-bottom:20px;
+margin-top:30px;
+margin-bottom:15px;
 border-bottom:2px solid var(--main-color);
 display:inline-block;
 padding-bottom:5px;
@@ -93,12 +101,11 @@ min-width:250px;
 background:var(--card-bg);
 padding:20px;
 border-radius:10px;
-position:relative;
 transition:0.3s;
 }
 
 .game-card:hover{
-transform:scale(1.03);
+transform:scale(1.04);
 }
 
 .game-card a{
@@ -112,60 +119,20 @@ text-decoration:none;
 border-radius:5px;
 }
 
-.status{
-position:absolute;
-top:10px;
-right:10px;
-background:red;
-padding:5px 10px;
-border-radius:20px;
-font-size:12px;
-animation:pulse 1.5s infinite;
+.fb-links a{
+display:block;
+margin:6px 0;
+color:#60a5fa;
+text-decoration:none;
 }
 
-@keyframes pulse{
-0%{box-shadow:0 0 5px red;}
-50%{box-shadow:0 0 20px red;}
-100%{box-shadow:0 0 5px red;}
-}
-
-.login-box{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#1f2937;
-padding:20px;
-width:220px;
-border-radius:10px;
-box-shadow:0px 0px 20px rgba(0,0,0,0.5);
-}
-
-.login-box input{
-width:100%;
-padding:8px;
-margin:5px 0;
-}
-
-.login-box button{
-width:100%;
-padding:8px;
-background:var(--accent-color);
-color:white;
-border:none;
-cursor:pointer;
-}
-
-.owner{
-text-align:center;
-margin-top:10px;
-font-weight:bold;
-font-size:16px;
-color:yellow;
+.fb-links a:hover{
+text-decoration:underline;
 }
 
 footer{
 text-align:center;
-padding:15px;
+padding:20px;
 margin-top:40px;
 opacity:0.6;
 font-size:13px;
@@ -175,7 +142,6 @@ font-size:13px;
 .sidebar{display:none;}
 .main{margin-left:0;}
 }
-
 </style>
 </head>
 
@@ -183,20 +149,21 @@ font-size:13px;
 
 <header>
 <div id="datetime"></div>
-
 <div id="brand">
 JAYS OCN SYSTEM
 <small>Gaming • Stories • Digital Power</small>
 </div>
-
 <div>OCN Portal</div>
 </header>
 
 <div class="sidebar">
-<a href="https://youtube.com/@jpsunny0004" target="_blank">YouTube</a>
-<a href="https://t.me/OCNsystem" target="_blank">Telegram</a>
-<a href="https://www.bandlab.com/crackyt0004" target="_blank">BandLab</a>
-<a href="https://wazirx.com/invite/3s8fagyj" target="_blank">WazirX</a>
+<h3>Social Hub</h3>
+<a href="https://youtube.com/@jpsunny0004" target="_blank" rel="noopener noreferrer">YouTube</a>
+<a href="https://t.me/OCNsystem" target="_blank" rel="noopener noreferrer">Telegram</a>
+<a href="https://www.facebook.com/share/18NJr81HGb/" target="_blank" rel="noopener noreferrer">Facebook Profile 1</a>
+<a href="https://www.facebook.com/groups/1830248547768278/" target="_blank" rel="noopener noreferrer">Facebook Group</a>
+<a href="https://www.bandlab.com/crackyt0004" target="_blank" rel="noopener noreferrer">BandLab</a>
+<a href="https://wazirx.com/invite/3s8fagyj" target="_blank" rel="noopener noreferrer">WazirX</a>
 </div>
 
 <div class="main">
@@ -204,35 +171,34 @@ JAYS OCN SYSTEM
 <h2 class="section-title">Gaming Zone</h2>
 
 <div class="gaming-zone">
-
 <div class="game-card">
-<div class="status">LIVE</div>
 <h3>Free Fire</h3>
 <p>Battle Royale Action</p>
 <a href="https://ffshare.garena.com/?region=IND&lang=en" target="_blank">Official Link</a>
 </div>
 
 <div class="game-card">
-<div class="status">ONLINE</div>
 <h3>Candy Crush Saga</h3>
 <p>Puzzle Challenge</p>
-<a href="https://ccs.play.king.com/xYwB/fi?deep_link_value=dpid%3D423836031" target="_blank">Play Now</a>
+<a href="https://ccs.play.king.com/xYwB/fi" target="_blank">Play Now</a>
+</div>
 </div>
 
+<h2 class="section-title">Facebook Activity</h2>
+<div class="fb-links">
+<a href="https://www.facebook.com/share/1CEfLrpEYx/" target="_blank">Post Link 1</a>
+<a href="https://www.facebook.com/share/1c56HzfLy6/" target="_blank">Post Link 2</a>
+<a href="https://www.facebook.com/share/184GRT4u6s/" target="_blank">Post Link 3</a>
+<a href="https://www.facebook.com/share/1C9TLL8iun/" target="_blank">Post Link 4</a>
+<a href="https://www.facebook.com/share/1Hog24d1di/" target="_blank">Post Link 5</a>
+<a href="https://www.facebook.com/share/18FpMKaMp4/" target="_blank">Post Link 6</a>
+<a href="https://www.facebook.com/share/1FCNajRAmd/" target="_blank">Post Link 7</a>
 </div>
 
 <footer>
-© 2026 JAYS OCN SYSTEM | Static Version 1.5
+© 2026 JAYS OCN SYSTEM | Static Version 1.3 Stable Build
 </footer>
 
-</div>
-
-<div class="login-box">
-<h3>LOGIN (Demo)</h3>
-<input type="text" placeholder="Username">
-<input type="password" placeholder="Password">
-<button>Enter</button>
-<div class="owner">Founder: JAYS</div>
 </div>
 
 <script>
