@@ -160,10 +160,35 @@ import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  appId: "YOUR_APP_ID"
+  {
+  "project_info": {
+    "project_number": "734966905680",
+    "project_id": "jays-ocn-system",
+    "storage_bucket": "jays-ocn-system.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:734966905680:android:7e398c7048dee1c23f0a55",
+        "android_client_info": {
+          "package_name": "com.JaysOCNsystem.JAYS"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtUhtccUKRJNNzaFHvqKXMmw0aBZBeUZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
 };
 
 const app = initializeApp(firebaseConfig);
