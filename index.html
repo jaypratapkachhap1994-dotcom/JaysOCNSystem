@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>JAYS OCN SYSTEM | Version 1.6</title>
-
-<meta name="description" content="JAYS OCN SYSTEM Version 1.6 with Firebase Authentication and Role-Based Owner Control System.">
+<title>JAYS OCN SYSTEM | Version 1.8</title>
 
 <style>
 :root{
@@ -17,150 +15,89 @@
 
 body{
 margin:0;
-font-family:Arial, Helvetica, sans-serif;
+font-family:Arial;
 background:var(--dark-bg);
 color:white;
 }
 
 header{
 background:var(--main-color);
-padding:18px;
+padding:15px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-flex-wrap:wrap;
-}
-
-#brand{
-font-size:22px;
-font-weight:bold;
-}
-
-.sidebar{
-position:fixed;
-left:0;
-top:75px;
-width:220px;
-height:100%;
-background:#1f2937;
-padding-top:20px;
-}
-
-.sidebar a{
-display:block;
-padding:14px;
-text-decoration:none;
-color:white;
-font-weight:bold;
-border-bottom:1px solid rgba(255,255,255,0.1);
-}
-
-.sidebar a:hover{
-background:var(--main-color);
 }
 
 .main{
-margin-left:240px;
 padding:30px;
 }
 
-.login-box{
+.section{
 margin-top:30px;
-background:#1f2937;
 padding:20px;
+background:#111827;
 border-radius:10px;
-max-width:400px;
 }
 
-.login-box input{
-width:100%;
-padding:10px;
-margin:8px 0;
-border:none;
-border-radius:5px;
-}
-
-.login-box button{
-width:100%;
-padding:10px;
+button{
+padding:8px 12px;
+margin-top:8px;
 background:var(--accent-color);
 border:none;
 color:white;
-border-radius:5px;
 cursor:pointer;
+border-radius:5px;
+}
+
+.slot{
+display:block;
+margin-top:8px;
+padding:8px;
+background:#1f2937;
+border-radius:5px;
+text-decoration:none;
+color:white;
 }
 
 #ownerPanel{
 display:none;
-margin-top:20px;
-padding:20px;
-background:#111827;
-border-radius:10px;
-border:1px solid var(--accent-color);
 }
 
-footer{
-text-align:center;
-padding:25px;
-margin-top:50px;
-opacity:0.7;
-font-size:13px;
-}
-
-@media(max-width:768px){
-.sidebar{display:none;}
-.main{margin-left:0;}
-}
 </style>
 </head>
 
 <body>
 
 <header>
-<div id="datetime"></div>
-<div id="brand">JAYS OCN SYSTEM</div>
-<div id="userStatus">Not Logged In</div>
+<div>JAYS OCN SYSTEM</div>
+<div id="status">Not Logged In</div>
 </header>
-
-<div class="sidebar">
-<a href="https://youtube.com/@jpsunny0004" target="_blank">YouTube</a>
-<a href="https://t.me/OCNsystem" target="_blank">Telegram</a>
-<a href="https://www.facebook.com/share/18NJr81HGb/" target="_blank">Facebook</a>
-</div>
 
 <div class="main">
 
-<h2>Version 1.6 – Role Based System</h2>
-
-<div class="login-box">
-<h3>Login</h3>
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Password">
-<button onclick="loginUser()">Login</button>
-<button onclick="logoutUser()">Logout</button>
+<div class="section">
+<h3>Dynamic Custom Links</h3>
+<div id="slots"></div>
 </div>
 
-<div id="ownerPanel">
-<h3>👑 Owner Control Panel</h3>
-<p>Only visible to Owner Role</p>
-<button>Change Theme (Future)</button>
-<button>Add Custom Links (Future)</button>
+<div class="section" id="ownerPanel">
+<h3>👑 Owner Dashboard</h3>
+<select onchange="changeTheme(this.value)">
+<option value="#1e40af">Blue</option>
+<option value="#22c55e">Green</option>
+<option value="#ffffff">White</option>
+</select>
 </div>
-
-<footer>
-© 2026 JAYS OCN SYSTEM | Version 1.6 Role System
-</footer>
 
 </div>
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, collection, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  {
   "project_info": {
     "project_number": "734966905680",
     "project_id": "jays-ocn-system",
@@ -188,60 +125,72 @@ const firebaseConfig = {
     }
   ],
   "configuration_version": "1"
-}
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-window.loginUser = function(){
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  signInWithEmailAndPassword(auth, email, password)
-  .catch(error => alert(error.message));
-}
-
-window.logoutUser = function(){
-  signOut(auth);
-}
+const ownerPanel = document.getElementById("ownerPanel");
 
 onAuthStateChanged(auth, async (user)=>{
 
-  const status = document.getElementById("userStatus");
-  const ownerPanel = document.getElementById("ownerPanel");
+  const status = document.getElementById("status");
 
   if(user){
-    status.innerText = "Logged In: " + user.email;
+    status.innerText="Logged In";
 
-    // Check Role from Firestore
-    const docRef = doc(db, "users", user.uid);
-    const docSnap = await getDoc(docRef);
+    const userDoc = await getDoc(doc(db,"users",user.uid));
 
-    if(docSnap.exists()){
-      if(docSnap.data().role === "owner"){
-        ownerPanel.style.display = "block";
-      }
+    if(userDoc.exists() && userDoc.data().role==="owner"){
+      ownerPanel.style.display="block";
     }
 
-  } else {
-    status.innerText = "Not Logged In";
-    ownerPanel.style.display = "none";
+  }else{
+    status.innerText="Not Logged In";
+    ownerPanel.style.display="none";
   }
 
 });
 
-</script>
+/* REAL-TIME CUSTOM LINKS */
+onSnapshot(collection(db,"customLinks"), (snapshot)=>{
 
-<script>
-function updateTime(){
-const now = new Date();
-document.getElementById("datetime").innerHTML =
-now.toLocaleDateString() + " | " + now.toLocaleTimeString();
-}
-setInterval(updateTime,1000);
-updateTime();
+  const container = document.getElementById("slots");
+  container.innerHTML="";
+
+  snapshot.forEach(doc=>{
+    const data = doc.data();
+
+    if(data.title && data.url){
+      const link = document.createElement("a");
+      link.href=data.url;
+      link.target="_blank";
+      link.className="slot";
+      link.innerText=data.title;
+      container.appendChild(link);
+    }
+
+  });
+
+});
+
+/* THEME CHANGE */
+window.changeTheme = async function(color){
+
+  await setDoc(doc(db,"settings","theme"),{
+    mainColor:color
+  });
+
+};
+
+/* REAL-TIME THEME LISTENER */
+onSnapshot(doc(db,"settings","theme"), (docSnap)=>{
+  if(docSnap.exists()){
+    document.documentElement.style.setProperty("--main-color", docSnap.data().mainColor);
+  }
+});
+
 </script>
 
 </body>
