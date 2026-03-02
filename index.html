@@ -4,193 +4,284 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>JAYS OCN SYSTEM | Version 1.8</title>
+<title>JAYS OCN SYSTEM | Version 2.4</title>
+
+<meta name="description" content="JAYS OCN SYSTEM Version 2.4 with Firebase Auth, Firestore integration, Auto Notification placeholder, mobile-friendly ultra-clean dashboard.">
 
 <style>
 :root{
 --main-color:#1e40af;
 --accent-color:#22c55e;
 --dark-bg:#0f172a;
+--card-bg:#111827;
 }
 
 body{
 margin:0;
-font-family:Arial;
+font-family:Arial, Helvetica, sans-serif;
 background:var(--dark-bg);
 color:white;
+transition:0.3s;
 }
 
 header{
 background:var(--main-color);
-padding:15px;
+padding:18px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+flex-wrap:wrap;
+transition:0.3s;
 }
 
-.main{
-padding:30px;
+#brand{
+font-size:22px;
+font-weight:bold;
 }
 
-.section{
-margin-top:30px;
-padding:20px;
-background:#111827;
+.sidebar{
+position:fixed;
+left:0;
+top:75px;
+width:60px;
+height:100%;
+background:#1f2937;
+display:flex;
+flex-direction:column;
+align-items:center;
+padding-top:20px;
+transition:0.3s;
+}
+
+.sidebar a{
+display:flex;
+flex-direction:column;
+align-items:center;
+padding:12px;
+text-decoration:none;
+color:white;
+width:100%;
+transition:0.3s;
+}
+
+.sidebar a:hover{
+background:var(--main-color);
 border-radius:10px;
 }
 
-button{
-padding:8px 12px;
+.sidebar a i{
+font-size:20px;
+margin-bottom:5px;
+}
+
+.main{
+margin-left:70px;
+padding:20px;
+transition:0.3s;
+}
+
+.section-title{
+border-bottom:2px solid var(--main-color);
+display:inline-block;
+padding-bottom:6px;
+margin-top:20px;
+}
+
+.game-card{
+background:var(--card-bg);
+padding:15px;
+border-radius:10px;
+margin-bottom:15px;
+transition:0.3s;
+}
+
+.game-card:hover{
+transform:scale(1.03);
+}
+
+.game-card a{
+display:block;
 margin-top:8px;
+padding:6px;
+background:var(--accent-color);
+color:white;
+text-align:center;
+text-decoration:none;
+border-radius:5px;
+}
+
+.login-box{
+margin-top:20px;
+background:#1f2937;
+padding:20px;
+border-radius:10px;
+max-width:400px;
+}
+
+.login-box input{
+width:100%;
+padding:10px;
+margin:8px 0;
+border:none;
+border-radius:5px;
+}
+
+.login-box button{
+width:100%;
+padding:10px;
 background:var(--accent-color);
 border:none;
 color:white;
+border-radius:5px;
 cursor:pointer;
-border-radius:5px;
 }
 
-.slot{
-display:block;
-margin-top:8px;
-padding:8px;
-background:#1f2937;
-border-radius:5px;
-text-decoration:none;
-color:white;
+#userStatus{
+margin-top:10px;
+font-size:14px;
+opacity:0.8;
 }
 
-#ownerPanel{
-display:none;
+footer{
+text-align:center;
+padding:20px;
+margin-top:30px;
+opacity:0.7;
+font-size:13px;
 }
 
+@media(max-width:768px){
+.sidebar{display:none;}
+.main{margin-left:0;}
+}
 </style>
-</head>
 
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+</head>
 <body>
 
 <header>
-<div>JAYS OCN SYSTEM</div>
-<div id="status">Not Logged In</div>
+<div id="datetime"></div>
+<div id="brand">JAYS OCN SYSTEM</div>
+<div id="userStatus">Not Logged In</div>
 </header>
+
+<div class="sidebar">
+<a href="https://youtube.com/@jpsunny0004" target="_blank"><i class="fab fa-youtube"></i></a>
+<a href="https://t.me/OCNsystem" target="_blank"><i class="fab fa-telegram"></i></a>
+<a href="https://www.facebook.com/share/18NJr81HGb/" target="_blank"><i class="fab fa-facebook"></i></a>
+<a href="https://wazirx.com/invite/3s8fagyj" target="_blank"><i class="fas fa-coins"></i></a>
+</div>
 
 <div class="main">
 
-<div class="section">
-<h3>Dynamic Custom Links</h3>
-<div id="slots"></div>
+<h2 class="section-title">Gaming Zone</h2>
+
+<div class="game-card">
+<h3>Free Fire</h3>
+<p>Battle Royale Action</p>
+<a href="https://ffshare.garena.com/?region=IND&lang=en" target="_blank">Official Link</a>
 </div>
 
-<div class="section" id="ownerPanel">
-<h3>👑 Owner Dashboard</h3>
-<select onchange="changeTheme(this.value)">
-<option value="#1e40af">Blue</option>
-<option value="#22c55e">Green</option>
-<option value="#ffffff">White</option>
-</select>
+<div class="game-card">
+<h3>Candy Crush Saga</h3>
+<p>Puzzle Challenge</p>
+<a href="https://ccs.play.king.com/xYwB/fi" target="_blank">Play Now</a>
 </div>
+
+<h2 class="section-title">Login & Dashboard</h2>
+
+<div class="login-box">
+<h3>Login System</h3>
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+<button onclick="loginUser()">Login</button>
+<button onclick="logoutUser()">Logout</button>
+</div>
+
+<footer>
+© 2026 JAYS OCN SYSTEM | Version 2.4
+</footer>
 
 </div>
 
+<!-- Firebase -->
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, collection, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+/* -------------------------
+ STEP 1: Replace with your Firebase Config
+ Firebase Console -> Project Settings -> Web App -> Config
+ ------------------------- */
 const firebaseConfig = {
-  "project_info": {
-    "project_number": "734966905680",
-    "project_id": "jays-ocn-system",
-    "storage_bucket": "jays-ocn-system.firebasestorage.app"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:734966905680:android:7e398c7048dee1c23f0a55",
-        "android_client_info": {
-          "package_name": "com.JaysOCNsystem.JAYS"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDtUhtccUKRJNNzaFHvqKXMmw0aBZBeUZw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    }
-  ],
-  "configuration_version": "1"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
 
+/* Initialize Firebase */
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const ownerPanel = document.getElementById("ownerPanel");
+/* -------------------------
+ Login / Logout
+ ------------------------- */
+window.loginUser = function(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-onAuthStateChanged(auth, async (user)=>{
+  signInWithEmailAndPassword(auth, email, password)
+    .then(()=> alert("Login Successful"))
+    .catch((error)=> alert(error.message));
+}
 
-  const status = document.getElementById("status");
+window.logoutUser = function(){
+  signOut(auth);
+}
 
+/* -------------------------
+ Auth State Listener
+ ------------------------- */
+onAuthStateChanged(auth, (user)=>{
+  const status = document.getElementById("userStatus");
   if(user){
-    status.innerText="Logged In";
-
-    const userDoc = await getDoc(doc(db,"users",user.uid));
-
-    if(userDoc.exists() && userDoc.data().role==="owner"){
-      ownerPanel.style.display="block";
-    }
-
+    status.innerText = "Logged In: " + user.email;
+    autoNotification(user.email); // Placeholder for auto notifications
   }else{
-    status.innerText="Not Logged In";
-    ownerPanel.style.display="none";
-  }
-
-});
-
-/* REAL-TIME CUSTOM LINKS */
-onSnapshot(collection(db,"customLinks"), (snapshot)=>{
-
-  const container = document.getElementById("slots");
-  container.innerHTML="";
-
-  snapshot.forEach(doc=>{
-    const data = doc.data();
-
-    if(data.title && data.url){
-      const link = document.createElement("a");
-      link.href=data.url;
-      link.target="_blank";
-      link.className="slot";
-      link.innerText=data.title;
-      container.appendChild(link);
-    }
-
-  });
-
-});
-
-/* THEME CHANGE */
-window.changeTheme = async function(color){
-
-  await setDoc(doc(db,"settings","theme"),{
-    mainColor:color
-  });
-
-};
-
-/* REAL-TIME THEME LISTENER */
-onSnapshot(doc(db,"settings","theme"), (docSnap)=>{
-  if(docSnap.exists()){
-    document.documentElement.style.setProperty("--main-color", docSnap.data().mainColor);
+    status.innerText = "Not Logged In";
   }
 });
 
+/* -------------------------
+ Auto Notification / New Post Placeholder
+ ------------------------- */
+function autoNotification(userEmail){
+  // Example: Push to Firestore on login
+  const colRef = collection(db, "userNotifications");
+  addDoc(colRef, {
+    email: userEmail,
+    message: "User logged in",
+    timestamp: new Date()
+  }).catch(err=>console.error(err));
+}
+
+</script>
+
+<script>
+function updateTime(){
+const now = new Date();
+document.getElementById("datetime").innerHTML =
+now.toLocaleDateString() + " | " + now.toLocaleTimeString();
+}
+setInterval(updateTime,1000);
+updateTime();
 </script>
 
 </body>
