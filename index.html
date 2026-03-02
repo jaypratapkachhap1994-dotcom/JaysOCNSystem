@@ -4,16 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>JAYS OCN SYSTEM | Version 1.5</title>
+<title>JAYS OCN SYSTEM | Version 1.6</title>
 
-<meta name="description" content="JAYS OCN SYSTEM Version 1.5 with Firebase Authentication integration and structured gaming portal.">
+<meta name="description" content="JAYS OCN SYSTEM Version 1.6 with Firebase Authentication and Role-Based Owner Control System.">
 
 <style>
 :root{
 --main-color:#1e40af;
 --accent-color:#22c55e;
 --dark-bg:#0f172a;
---card-bg:#111827;
 }
 
 body{
@@ -65,13 +64,6 @@ margin-left:240px;
 padding:30px;
 }
 
-.section-title{
-border-bottom:2px solid var(--main-color);
-display:inline-block;
-padding-bottom:6px;
-margin-top:30px;
-}
-
 .login-box{
 margin-top:30px;
 background:#1f2937;
@@ -98,10 +90,13 @@ border-radius:5px;
 cursor:pointer;
 }
 
-#userStatus{
-margin-top:10px;
-font-size:14px;
-opacity:0.8;
+#ownerPanel{
+display:none;
+margin-top:20px;
+padding:20px;
+background:#111827;
+border-radius:10px;
+border:1px solid var(--accent-color);
 }
 
 footer{
@@ -131,34 +126,38 @@ font-size:13px;
 <a href="https://youtube.com/@jpsunny0004" target="_blank">YouTube</a>
 <a href="https://t.me/OCNsystem" target="_blank">Telegram</a>
 <a href="https://www.facebook.com/share/18NJr81HGb/" target="_blank">Facebook</a>
-<a href="https://wazirx.com/invite/3s8fagyj" target="_blank">WazirX</a>
 </div>
 
 <div class="main">
 
-<h2 class="section-title">Gaming Zone</h2>
-
-<p>Firebase Connected Version Ready</p>
+<h2>Version 1.6 – Role Based System</h2>
 
 <div class="login-box">
-<h3>Login System</h3>
+<h3>Login</h3>
 <input type="email" id="email" placeholder="Email">
 <input type="password" id="password" placeholder="Password">
 <button onclick="loginUser()">Login</button>
 <button onclick="logoutUser()">Logout</button>
 </div>
 
+<div id="ownerPanel">
+<h3>👑 Owner Control Panel</h3>
+<p>Only visible to Owner Role</p>
+<button>Change Theme (Future)</button>
+<button>Add Custom Links (Future)</button>
+</div>
+
 <footer>
-© 2026 JAYS OCN SYSTEM | Version 1.5 Firebase Build
+© 2026 JAYS OCN SYSTEM | Version 1.6 Role System
 </footer>
 
 </div>
 
-<!-- Firebase -->
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
@@ -169,32 +168,43 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 window.loginUser = function(){
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
   signInWithEmailAndPassword(auth, email, password)
-  .then(()=>{
-    alert("Login Successful");
-  })
-  .catch((error)=>{
-    alert(error.message);
-  });
+  .catch(error => alert(error.message));
 }
 
 window.logoutUser = function(){
   signOut(auth);
 }
 
-onAuthStateChanged(auth, (user)=>{
+onAuthStateChanged(auth, async (user)=>{
+
   const status = document.getElementById("userStatus");
+  const ownerPanel = document.getElementById("ownerPanel");
 
   if(user){
     status.innerText = "Logged In: " + user.email;
-  }else{
+
+    // Check Role from Firestore
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
+
+    if(docSnap.exists()){
+      if(docSnap.data().role === "owner"){
+        ownerPanel.style.display = "block";
+      }
+    }
+
+  } else {
     status.innerText = "Not Logged In";
+    ownerPanel.style.display = "none";
   }
+
 });
 
 </script>
