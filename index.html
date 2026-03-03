@@ -209,20 +209,19 @@ font-size:13px;
 <!-- Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 /* -------------------------
- STEP 1: Replace with your Firebase Config
- Firebase Console -> Project Settings -> Web App -> Config
+ Replace with correct Firebase Config
  ------------------------- */
 const firebaseConfig = {
   apiKey: "AIzaSyDtUhtccUKRJNNzaFHvqKXMmw0aBZBeUZw",
-  authDomain: "734966905680.firebaeapp.com",
+  authDomain: "jays-ocn-system.firebaseapp.com",  //
   projectId: "jays-ocn-system",
-  storageBucket: "jays-ocn-system.firebasestorage.app",
-  messagingSenderId: "734966905680-4d1iti4ae55n32d8i14tdv27ber3hlh9.apps.googleusercontent.com",
-  appId: "1:734966905680:android:7e398c7048dee1c23f0a55"
+  storageBucket: "jays-ocn-system.appspot.com",
+  messagingSenderId: "734966905680",
+  appId: "1:734966905680:web:7e398c7048dee1c23f0a55"
 };
 
 /* Initialize Firebase */
@@ -243,7 +242,7 @@ window.loginUser = function(){
 }
 
 window.logoutUser = function(){
-  signOut(auth);
+  signOut(auth).then(()=> alert("Logged Out"));
 }
 
 /* -------------------------
@@ -263,7 +262,6 @@ onAuthStateChanged(auth, (user)=>{
  Auto Notification / New Post Placeholder
  ------------------------- */
 function autoNotification(userEmail){
-  // Example: Push to Firestore on login
   const colRef = collection(db, "userNotifications");
   addDoc(colRef, {
     email: userEmail,
@@ -272,13 +270,25 @@ function autoNotification(userEmail){
   }).catch(err=>console.error(err));
 }
 
+/* -------------------------
+ Optional: Create test user (first-time use)
+ ------------------------- */
+function createTestUser(){
+  createUserWithEmailAndPassword(auth, "test@example.com", "password123")
+    .then(userCredential => console.log("Test User Created"))
+    .catch(error => console.error(error));
+}
+
+// Uncomment to create a test user once
+// createTestUser();
+
 </script>
 
 <script>
 function updateTime(){
-const now = new Date();
-document.getElementById("datetime").innerHTML =
-now.toLocaleDateString() + " | " + now.toLocaleTimeString();
+  const now = new Date();
+  document.getElementById("datetime").innerHTML =
+    now.toLocaleDateString() + " | " + now.toLocaleTimeString();
 }
 setInterval(updateTime,1000);
 updateTime();
